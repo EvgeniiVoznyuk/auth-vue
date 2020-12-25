@@ -91,7 +91,8 @@ section {
 	flex-grow: 1;
 	flex-basis: 0;
 	padding: 1rem;
-	@media screen and (max-width: 742px) {}
+	@media screen and (max-width: 742px) {
+  }
 }
 
 [v-cloak] {
