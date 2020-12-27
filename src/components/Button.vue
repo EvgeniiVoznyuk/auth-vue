@@ -16,10 +16,14 @@ export default {
       type: String,
       required: true,
     },
+    id: {
+      type: String,
+      required: true,
+    },
   },
   methods: {
     showModal() {
-      this.$emit('showModal');
+      this.$emit('showModal', this.id);
     },
   },
 };

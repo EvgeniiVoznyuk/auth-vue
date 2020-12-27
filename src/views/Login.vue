@@ -11,9 +11,10 @@
   <div class="container-fluid">
     <div class="row">
       <Button
-        :key="title"
+        :key="title[1]"
+        :id="title[1]"
         v-for="title in titles"
-        :title="title"
+        :title="title[0]"
         @showModal="openModal"
       />
     </div>
@@ -47,13 +48,16 @@ export default {
   data() {
     return {
       titles: [
-        'Постачальники',
-        'Доставка',
-        'Співробітники',
-        'Товари',
-        'Замовлення',
-        'Покупці',
+        ['Постачальники', 'suppliers'],
+        ['Доставка', 'delivery'],
+        ['Співробітники', 'employees'],
+        ['Товари', 'products'],
+        ['Замовлення', 'order'],
+        ['Покупці', 'customers'],
       ],
+      links: {
+        p: 1,
+      },
       isModalShown: false,
       currentData: null,
     };
@@ -62,13 +66,23 @@ export default {
     await this.$store.dispatch('fetchData');
   },
   methods: {
-    openModal() {
-      this.currentData = this.$store.getters.products;
-      console.log(this.currenData);
+    openModal(id) {
+      this.currentData = this.dataObj[id];
       this.isModalShown = true;
     },
     closeModal() {
       this.isModalShown = false;
+    },
+  },
+  computed: {
+    dataObj() {
+      return {
+        suppliers: this.$store.getters.suppliers,
+        products: this.$store.getters.products,
+        order: this.$store.getters.order,
+        employees: this.$store.getters.employees,
+        delivery: this.$store.getters.delivery,
+      };
     },
   },
 };

@@ -19,10 +19,11 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // collection references
-const suppliersCollection = db.collection('suppliers');
+const deliveryCollection = db.collection('delivery');
+const employeesCollection = db.collection('employees');
+const orderCollection = db.collection('order');
 const productCollection = db.collection('product');
-const commentsCollection = db.collection('comments');
-const likesCollection = db.collection('likes');
+const suppliersCollection = db.collection('suppliers');
 
 // export utils/refs
 export {
@@ -30,6 +31,7 @@ export {
   auth,
   suppliersCollection,
   productCollection,
-  commentsCollection,
-  likesCollection,
+  orderCollection,
+  employeesCollection,
+  deliveryCollection,
 };
