@@ -19,9 +19,14 @@
     </div>
   </div>
 
-    <Modal />
+    <Modal
+      v-if="isModalShown"
+      :dialogTableVisible="isModalShown"
+      @close-modal="closeModal"
+      :dataFromServer="currentData"
+    />
     <footer>
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 title_class">
+      <div class="title_class">
         <div class="column">
           <p><a href="#">moyo.ua</a> since 2009</p>
         </div>
@@ -32,7 +37,6 @@
 
 <script>
 import Modal from '../components/Modal.vue';
-// import Modal from '../../node_modules/material-ui/core/Modal.';
 import Button from '../components/Button.vue';
 
 export default {
@@ -42,17 +46,6 @@ export default {
   },
   data() {
     return {
-      // loginForm: {
-      //   email: '',
-      //   password: '',
-      // },
-      // signupForm: {
-      //   name: '',
-      //   email: '',
-      //   password: '',
-      // },
-      // showLoginForm: true,
-      // showPasswordReset: false,
       titles: [
         'Постачальники',
         'Доставка',
@@ -61,33 +54,22 @@ export default {
         'Замовлення',
         'Покупці',
       ],
+      isModalShown: false,
+      currentData: null,
     };
+  },
+  async mounted() {
+    await this.$store.dispatch('fetchData');
   },
   methods: {
     openModal() {
-      console.log('123');
-      this.$bvModal.show('my-modal');
+      this.currentData = this.$store.getters.products;
+      console.log(this.currenData);
+      this.isModalShown = true;
     },
-    // login() {
-    //   this.$store.dispatch('login', {
-    //     email: this.loginForm.email,
-    //     password: this.loginForm.password,
-    //   });
-    // },
-    // signup() {
-    //   this.$store.dispatch('signup', {
-    //     email: this.signupForm.email,
-    //     password: this.signupForm.password,
-    //     name: this.signupForm.name,
-    //     testNumber: 1,
-    //   });
-    // },
-    // toggleForm() {
-    //   this.showLoginForm = !this.showLoginForm;
-    // },
-    // togglePasswordReset() {
-    //   this.showPasswordReset = !this.showPasswordReset;
-    // },
+    closeModal() {
+      this.isModalShown = false;
+    },
   },
 };
 </script>

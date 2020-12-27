@@ -1,51 +1,44 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as fb from '../firebase';
-// import router from '../router/index';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userProfile: {},
-    users: [],
+    products: [],
+    suppliers: [],
   },
   mutations: {
-    setUserProfile(state, val) {
-      state.users = val;
+    setProducts(state, val) {
+      state.products = val;
+    },
+    setSuppliers(state, val) {
+      state.suppliers = val;
     },
   },
   actions: {
-    async login({ dispatch }, form) {
-      // sign user in
-      const { user } = await fb.auth.signInWithEmailAndPassword(form.email, form.password);
-
-      // fetch user profile and set in state
-      dispatch('fetchUserProfile', user);
-    },
-    async fetchUserProfile({ commit }) {
-      // fetch user profile
-      const userProfile = await fb.usersCollection.get();
-      console.log(userProfile);
-      // set user profile in state
-      commit('setUserProfile', userProfile.data());
-    },
-    async signup({ dispatch }, form) {
-      // sign user up
-      const { user } = await fb.auth.createUserWithEmailAndPassword(form.email, form.password);
-
-      // create user profile object in userCollections
-      await fb.postsCollection.doc(user.uid).set({
-        name: form.name,
-        test: form.testNumber,
+    async fetchData({ commit }) {
+      const products = [];
+      const suppliers = [];
+      await fb.productCollection.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          products.push(doc.data());
+        });
       });
-
-      // fetch user profile and set in state
-      dispatch('fetchUserProfile', user);
+      await fb.suppliersCollection.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          suppliers.push(doc.data());
+        });
+      });
+      commit('setProducts', products);
+      commit('setSuppliers', suppliers);
+      console.log('fetched');
     },
   },
   getters: {
-    users: (state) => state.users,
+    products: (state) => state.products,
+    suppliers: (state) => state.suppliers,
   },
   modules: {
   },
