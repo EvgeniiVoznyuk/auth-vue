@@ -51,9 +51,9 @@ export default {
         ['Постачальники', 'suppliers'],
         ['Доставка', 'delivery'],
         ['Співробітники', 'employees'],
-        ['Товари', 'products'],
-        ['Замовлення', 'order'],
-        ['Покупці', 'customers'],
+        // ['Товари', 'products'],
+        // ['Замовлення', 'order'],
+        // ['Покупці', 'customers'],
       ],
       links: {
         p: 1,
